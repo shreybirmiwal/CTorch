@@ -46,6 +46,7 @@ struct Value *addValue(struct Value *val1, struct Value *val2)
 
     newValPointer->data = val1->data + val2->data;
     newValPointer->grad = 0.0;
+    newValPointer->isVisited = 0;
     newValPointer->isLeaf = 0;
     newValPointer->child1 = val1;
     newValPointer->child2 = val2;
@@ -60,6 +61,7 @@ struct Value *multiplyValue(struct Value *val1, struct Value *val2)
 
     newValPointer->data = (val1->data) * (val2->data);
     newValPointer->grad = 0.0;
+    newValPointer->isVisited = 0;
     newValPointer->isLeaf = 0;
     newValPointer->child1 = val1;
     newValPointer->child2 = val2;
@@ -77,6 +79,7 @@ void getTopo(struct Value *head, struct Value **topologicalArray, int *size)
         return;
     }
 
+    head->isVisited = true;
     // get children first
     getTopo(head->child1, topologicalArray, size);
     getTopo(head->child2, topologicalArray, size);
