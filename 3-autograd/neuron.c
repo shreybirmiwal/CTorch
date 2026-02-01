@@ -20,8 +20,9 @@ struct Neuron *createNeuron(int numInputs)
     return neuron;
 }
 
-struct Value *forwardNeuron(struct Neuron *neuron, struct Value **inputs, int size)
+struct Value *forwardNeuron(struct Neuron *neuron, struct Value **inputs)
 {
+    int size = neuron->num_inputs;
     if (size != neuron->num_inputs)
     {
         return NULL; // err

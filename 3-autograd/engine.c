@@ -1,6 +1,7 @@
 #include "autograd.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 //  struct Value **topologicalArray is a pointer to a POIINTER OF STRUCT VALUES
 // this means we are pointing to where we have an array of struct value pointers
@@ -44,6 +45,11 @@ void backward(struct Value **topologicalArray, int size)
             currentNode->child1->grad += (currentNode->child2->data) * currentNode->grad;
             currentNode->child2->grad += (currentNode->child1->data) * currentNode->grad;
             break;
+        case 't': // tanh
+            // currentNode->child1->grad += (1 - (tanh(currentNode->child1->data))^2 * * currentNode->grad;
+            //  tanh backward is 1-tanh^2(x)
+            //  we already have tanh(x) from the forward pass, so we can simplify this
+            currentNode->child1->grad += (1 - currentNode->data * currentNode->data) * currentNode->grad;
 
         default:
             break;
@@ -131,8 +137,19 @@ struct Value *multiplyValue(struct Value *val1, struct Value *val2)
     return newValPointer;
 }
 
-struct Value *tanh(struct Value *val1)
+struct Value *tanhValue(struct Value *val1)
 {
+    struct Value *newValPointer = malloc(sizeof(struct Value));
+
+    newValPointer->data = tanh(val1->data);
+    newValPointer->grad = 0.0;
+    newValPointer->isVisited = 0;
+    newValPointer->isLeaf = 0;
+    newValPointer->child1 = val1;
+    newValPointer->child2 = NULL;
+    newValPointer->op = 't'; // tanh
+
+    return newValPointer;
 }
 
 void printValue(struct Value *val)
