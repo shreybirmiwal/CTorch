@@ -2,30 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(void)
-{
-    struct Value *newVal = createLeafValue(3.0);
-    struct Value *val2 = createLeafValue(2.0);
-    struct Value *out = addValue(newVal, val2);
-    printValue(out);
-
-    // build topologicalArray here
-    // a) we need to know how much mem to allocate
-    struct Value **topologicalArray = calloc(3, __SIZEOF_POINTER__); // 3 pointers, 3 calues
-    int size = 0;
-    getTopo(out, topologicalArray, &size);
-
-    // backward pass
-    backward(topologicalArray, size);
-
-    printValue(val2);
-
-    // clean up
-    zeroGrad(topologicalArray, size);
-    freeGraph(topologicalArray, size);
-    return 0;
-}
-
 //  struct Value **topologicalArray is a pointer to a POIINTER OF STRUCT VALUES
 // this means we are pointing to where we have an array of struct value pointers
 void getTopo(struct Value *head, struct Value **topologicalArray, int *size)
@@ -91,6 +67,7 @@ void zeroGrad(struct Value **topologicalArray, int size)
     for (int i = 0; i < size; i++)
     {
         topologicalArray[i]->grad = 0;
+        topologicalArray[i]->isVisited = 0; // might need this if training runs this again
     }
 }
 
@@ -107,7 +84,25 @@ struct Value *createLeafValue(float data)
 
     return newValPointer;
 }
-struct Value *addValue(struct Value *val1, struct Value *val2)
+
+struct Value *createRandomLeafValue()
+{
+    struct Value *newValPointer = malloc(sizeof(struct Value));
+    float randVal = ((float)(rand() % 100) + 1) / 100.0f;
+
+    newValPointer->data = randVal;
+    newValPointer->isVisited = 0;
+    newValPointer->grad = 0.0;
+    newValPointer->isLeaf = 1;
+    newValPointer->child1 = NULL;
+    newValPointer->child2 = NULL;
+    newValPointer->op = '\0';
+
+    return newValPointer;
+}
+
+struct Value *
+addValue(struct Value *val1, struct Value *val2)
 {
     struct Value *newValPointer = malloc(sizeof(struct Value));
 
@@ -134,6 +129,10 @@ struct Value *multiplyValue(struct Value *val1, struct Value *val2)
     newValPointer->op = '*';
 
     return newValPointer;
+}
+
+struct Value *tanh(struct Value *val1)
+{
 }
 
 void printValue(struct Value *val)

@@ -1,5 +1,5 @@
-
 #include <stdbool.h>
+#pragma once
 
 // Core scalar value in the autograd graph.
 struct Value
@@ -16,6 +16,7 @@ struct Value
 };
 
 struct Value *createLeafValue(float data);
+struct Value *createRandomLeafValue();
 struct Value *addValue(struct Value *val1, struct Value *val2);
 struct Value *multiplyValue(struct Value *val1, struct Value *val2);
 void printValue(struct Value *val);
@@ -36,3 +37,18 @@ struct Neuron
 
 struct Neuron *createNeuron(int numInputs);
 struct Value *forwardNeuron(struct Neuron *neuron, struct Value **inputs, int size);
+void updateNeuronParams(struct Neuron *neuron, float learning_rate);
+
+// for torch_utils.c
+struct Tensor
+{
+    int width;
+    struct Value **array; // pointer to value pointer
+};
+
+struct Embedding_Table
+{
+    // we want to know size, a pointer to an array of vectors
+    int size;
+    struct Tensor **table; // pointer to an array of tensor
+};
