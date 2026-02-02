@@ -77,7 +77,7 @@ void zeroGrad(struct Value **topologicalArray, int size)
     }
 }
 
-struct Value *createLeafValue(float data)
+struct Value *createLeafValue(float data, bool updatable)
 {
     struct Value *newValPointer = malloc(sizeof(struct Value));
     newValPointer->data = data;
@@ -87,11 +87,12 @@ struct Value *createLeafValue(float data)
     newValPointer->child1 = NULL;
     newValPointer->child2 = NULL;
     newValPointer->op = '\0';
+    newValPointer->isUpdatable = updatable;
 
     return newValPointer;
 }
 
-struct Value *createRandomLeafValue()
+struct Value *createRandomLeafValue(bool updatable)
 {
     struct Value *newValPointer = malloc(sizeof(struct Value));
     float randVal = ((float)(rand() % 100) + 1) / 100.0f;
@@ -103,6 +104,7 @@ struct Value *createRandomLeafValue()
     newValPointer->child1 = NULL;
     newValPointer->child2 = NULL;
     newValPointer->op = '\0';
+    newValPointer->isUpdatable = updatable;
 
     return newValPointer;
 }
@@ -120,6 +122,8 @@ addValue(struct Value *val1, struct Value *val2)
     newValPointer->child2 = val2;
     newValPointer->op = '+';
 
+    newValPointer->isUpdatable = false;
+
     return newValPointer;
 }
 struct Value *multiplyValue(struct Value *val1, struct Value *val2)
@@ -133,6 +137,8 @@ struct Value *multiplyValue(struct Value *val1, struct Value *val2)
     newValPointer->child1 = val1;
     newValPointer->child2 = val2;
     newValPointer->op = '*';
+
+    newValPointer->isUpdatable = false;
 
     return newValPointer;
 }
@@ -148,6 +154,8 @@ struct Value *tanhValue(struct Value *val1)
     newValPointer->child1 = val1;
     newValPointer->child2 = NULL;
     newValPointer->op = 't'; // tanh
+
+    newValPointer->isUpdatable = false;
 
     return newValPointer;
 }

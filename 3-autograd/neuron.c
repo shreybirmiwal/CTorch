@@ -12,10 +12,10 @@ struct Neuron *createNeuron(int numInputs)
 
     for (int i = 0; i < numInputs; i++)
     {
-        neuron->weights[i] = createRandomLeafValue();
+        neuron->weights[i] = createRandomLeafValue(true);
     }
     neuron->num_inputs = numInputs;
-    neuron->bias = createLeafValue(0);
+    neuron->bias = createLeafValue(0, true);
 
     return neuron;
 }
@@ -40,9 +40,10 @@ struct Value *forwardNeuron(struct Neuron *neuron, struct Value **inputs)
     return curFinalSumPointer;
 }
 
+// assumes backward() already ran
+// potentially not used
 void updateNeuronParams(struct Neuron *neuron, float learning_rate)
 {
-    // assumes backward() already ran
     for (int i = 0; i < neuron->num_inputs; i++)
     {
         struct Value *curWeight = neuron->weights[i];
@@ -52,4 +53,16 @@ void updateNeuronParams(struct Neuron *neuron, float learning_rate)
 
     // update bias aswell
     neuron->bias->data -= neuron->bias->grad * learning_rate;
+}
+
+// assumes backward() already ran
+void updateWeights(struct Value **topologicalArr, int size, float learning_rate)
+{
+    for (int i = 0; i < size; i++)
+    {
+        if (topologicalArr[i]->isUpdatable)
+        {
+            topologicalArr[i]->data -= topologicalArr[i]->grad * learning_rate;
+        }
+    }
 }
