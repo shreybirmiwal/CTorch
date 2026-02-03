@@ -1,0 +1,28 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     autograd
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _getTopo, symObjAddr: 0x0, symBinAddr: 0x100003090, symSize: 0xB4 }
+  - { offsetInCU: 0x48, offset: 0x48, size: 0x8, addend: 0x0, symName: _getTopo, symObjAddr: 0x0, symBinAddr: 0x100003090, symSize: 0xB4 }
+  - { offsetInCU: 0x88, offset: 0x88, size: 0x8, addend: 0x0, symName: _backward, symObjAddr: 0xB4, symBinAddr: 0x100003144, symSize: 0x1B4 }
+  - { offsetInCU: 0xF2, offset: 0xF2, size: 0x8, addend: 0x0, symName: _freeGraph, symObjAddr: 0x268, symBinAddr: 0x1000032F8, symSize: 0x6C }
+  - { offsetInCU: 0x140, offset: 0x140, size: 0x8, addend: 0x0, symName: _zeroGrad, symObjAddr: 0x2D4, symBinAddr: 0x100003364, symSize: 0x6C }
+  - { offsetInCU: 0x18E, offset: 0x18E, size: 0x8, addend: 0x0, symName: _createLeafValue, symObjAddr: 0x340, symBinAddr: 0x1000033D0, symSize: 0x90 }
+  - { offsetInCU: 0x1D2, offset: 0x1D2, size: 0x8, addend: 0x0, symName: _createRandomLeafValue, symObjAddr: 0x3D0, symBinAddr: 0x100003460, symSize: 0xBC }
+  - { offsetInCU: 0x216, offset: 0x216, size: 0x8, addend: 0x0, symName: _addValue, symObjAddr: 0x48C, symBinAddr: 0x10000351C, symSize: 0x94 }
+  - { offsetInCU: 0x25A, offset: 0x25A, size: 0x8, addend: 0x0, symName: _multiplyValue, symObjAddr: 0x520, symBinAddr: 0x1000035B0, symSize: 0x94 }
+  - { offsetInCU: 0x29E, offset: 0x29E, size: 0x8, addend: 0x0, symName: _tanhValue, symObjAddr: 0x5B4, symBinAddr: 0x100003644, symSize: 0x8C }
+  - { offsetInCU: 0x2D4, offset: 0x2D4, size: 0x8, addend: 0x0, symName: _printValue, symObjAddr: 0x640, symBinAddr: 0x1000036D0, symSize: 0x9C }
+  - { offsetInCU: 0x2F8, offset: 0x2F8, size: 0x8, addend: 0x0, symName: _printTree, symObjAddr: 0x6DC, symBinAddr: 0x10000376C, symSize: 0x74 }
+  - { offsetInCU: 0x26, offset: 0x3C8, size: 0x8, addend: 0x0, symName: _createNeuron, symObjAddr: 0x0, symBinAddr: 0x1000037E0, symSize: 0xB4 }
+  - { offsetInCU: 0x33, offset: 0x3D5, size: 0x8, addend: 0x0, symName: _createNeuron, symObjAddr: 0x0, symBinAddr: 0x1000037E0, symSize: 0xB4 }
+  - { offsetInCU: 0x85, offset: 0x427, size: 0x8, addend: 0x0, symName: _forwardNeuron, symObjAddr: 0xB4, symBinAddr: 0x100003894, symSize: 0xE0 }
+  - { offsetInCU: 0x10F, offset: 0x4B1, size: 0x8, addend: 0x0, symName: _updateWeights, symObjAddr: 0x194, symBinAddr: 0x100003974, symSize: 0x94 }
+  - { offsetInCU: 0x26, offset: 0x600, size: 0x8, addend: 0x0, symName: _get_sub_array_from_tensor, symObjAddr: 0x0, symBinAddr: 0x100003A08, symSize: 0x80 }
+  - { offsetInCU: 0x33, offset: 0x60D, size: 0x8, addend: 0x0, symName: _get_sub_array_from_tensor, symObjAddr: 0x0, symBinAddr: 0x100003A08, symSize: 0x80 }
+  - { offsetInCU: 0x85, offset: 0x65F, size: 0x8, addend: 0x0, symName: _createTensor, symObjAddr: 0x80, symBinAddr: 0x100003A88, symSize: 0xE4 }
+  - { offsetInCU: 0xF3, offset: 0x6CD, size: 0x8, addend: 0x0, symName: _create_embedding_table, symObjAddr: 0x164, symBinAddr: 0x100003B6C, symSize: 0xB0 }
+  - { offsetInCU: 0x16F, offset: 0x749, size: 0x8, addend: 0x0, symName: _loss_function_MSE, symObjAddr: 0x214, symBinAddr: 0x100003C1C, symSize: 0x60 }
+  - { offsetInCU: 0x26, offset: 0x8AF, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003C7C, symSize: 0x224 }
+  - { offsetInCU: 0x33, offset: 0x8BC, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003C7C, symSize: 0x224 }
+...

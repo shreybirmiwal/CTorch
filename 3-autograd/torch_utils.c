@@ -1,12 +1,13 @@
 #include "autograd.h"
 #include <stdlib.h>
+#include <string.h>
 
 // inclusive exclusive, ie: [start, end)
 struct Value **get_sub_array_from_tensor(struct Tensor *tensor, int startIndex, int endIndex)
 {
-    struct Value **new_ar = malloc(sizeof(struct Value) * (endIndex - startIndex));
+    struct Value **new_ar = malloc(sizeof(struct Value *) * (endIndex - startIndex));
 
-    memcpy(new_ar, tensor->array + startIndex, (endIndex - startIndex) * sizeof(struct Value));
+    memcpy(new_ar, tensor->array + startIndex, (endIndex - startIndex) * sizeof(struct Value *));
 
     return new_ar;
 }
@@ -37,6 +38,7 @@ struct Embedding_Table *create_embedding_table(int length, int width)
 {
     struct Embedding_Table *emb_table = malloc(sizeof(struct Embedding_Table));
     emb_table->size = length;
+    emb_table->table = calloc(length, sizeof(struct Tensor *));
     for (int i = 0; i < length; i++)
     {
         struct Tensor *row = createTensor(width, true, true);

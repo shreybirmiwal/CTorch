@@ -34,7 +34,7 @@ void backward(struct Value **topologicalArray, int size)
 
         switch (currentNode->op)
         {
-        case '\0':
+        case 'l': // leaf
             break;
 
         case '+':
@@ -50,8 +50,10 @@ void backward(struct Value **topologicalArray, int size)
             //  tanh backward is 1-tanh^2(x)
             //  we already have tanh(x) from the forward pass, so we can simplify this
             currentNode->child1->grad += (1 - currentNode->data * currentNode->data) * currentNode->grad;
+            break;
 
         default:
+            printf("error! default case hit");
             break;
         }
     }
@@ -86,7 +88,7 @@ struct Value *createLeafValue(float data, bool updatable)
     newValPointer->isLeaf = 1;
     newValPointer->child1 = NULL;
     newValPointer->child2 = NULL;
-    newValPointer->op = '\0';
+    newValPointer->op = 'l';
     newValPointer->isUpdatable = updatable;
 
     return newValPointer;
@@ -103,7 +105,7 @@ struct Value *createRandomLeafValue(bool updatable)
     newValPointer->isLeaf = 1;
     newValPointer->child1 = NULL;
     newValPointer->child2 = NULL;
-    newValPointer->op = '\0';
+    newValPointer->op = 'l';
     newValPointer->isUpdatable = updatable;
 
     return newValPointer;
@@ -162,11 +164,27 @@ struct Value *tanhValue(struct Value *val1)
 
 void printValue(struct Value *val)
 {
-    printf("\nValue\nData: %f\nGrad: %f\nisLeaf: %d\nChild1 Pointer: %p\nChild2 Pointer: %p\nOperation: %c",
+    printf("\nValue %p\nData: %f\nGrad: %f\nisLeaf: %d\nChild1 Pointer: %p\nChild2 Pointer: %p\nOperation: %c\nIs Updatable: %d",
+           (void *)val,
            val->data,
            val->grad,
            val->isLeaf,
            (void *)val->child1,
            (void *)val->child2,
-           val->op);
+           val->op,
+           val->isUpdatable);
+}
+
+void printTree(struct Value *head)
+{
+    printValue(head);
+
+    if (head->child1 != NULL)
+    {
+        printTree(head->child1);
+    }
+    if (head->child2 != NULL)
+    {
+        printTree(head->child2);
+    }
 }

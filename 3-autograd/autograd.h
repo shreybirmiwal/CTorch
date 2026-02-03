@@ -23,6 +23,7 @@ struct Value *multiplyValue(struct Value *val1, struct Value *val2);
 struct Value *tanhValue(struct Value *val1);
 
 void printValue(struct Value *val);
+void printTree(struct Value *head);
 
 void getTopo(struct Value *head, struct Value **topologicalArray, int *size);
 void backward(struct Value **topologicalArray, int size);
@@ -40,7 +41,7 @@ struct Neuron
 
 struct Neuron *createNeuron(int numInputs);
 struct Value *forwardNeuron(struct Neuron *neuron, struct Value **inputs);
-void updateNeuronParams(struct Neuron *neuron, float learning_rate);
+// void updateNeuronParams(struct Neuron *neuron, float learning_rate);
 void updateWeights(struct Value **topologicalArr, int size, float learning_rate);
 
 // for torch_utils.c
@@ -59,5 +60,5 @@ struct Embedding_Table
 
 struct Tensor *createTensor(int width, bool createRandVals, bool updatable);
 struct Value **get_sub_array_from_tensor(struct Tensor *tensor, int startIndex, int endIndex);
-struct Embedding_Table *create_embedding_table(int64_t length, int width);
+struct Embedding_Table *create_embedding_table(int length, int width);
 struct Value *loss_function_MSE(struct Value *predicted, float actual);

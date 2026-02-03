@@ -42,18 +42,18 @@ struct Value *forwardNeuron(struct Neuron *neuron, struct Value **inputs)
 
 // assumes backward() already ran
 // potentially not used
-void updateNeuronParams(struct Neuron *neuron, float learning_rate)
-{
-    for (int i = 0; i < neuron->num_inputs; i++)
-    {
-        struct Value *curWeight = neuron->weights[i];
-        // update as per learning rate
-        curWeight->data -= curWeight->grad * learning_rate;
-    }
+// void updateNeuronParams(struct Neuron *neuron, float learning_rate)
+// {
+//     for (int i = 0; i < neuron->num_inputs; i++)
+//     {
+//         struct Value *curWeight = neuron->weights[i];
+//         // update as per learning rate
+//         curWeight->data -= curWeight->grad * learning_rate;
+//     }
 
-    // update bias aswell
-    neuron->bias->data -= neuron->bias->grad * learning_rate;
-}
+//     // update bias aswell
+//     neuron->bias->data -= neuron->bias->grad * learning_rate;
+// }
 
 // assumes backward() already ran
 void updateWeights(struct Value **topologicalArr, int size, float learning_rate)
