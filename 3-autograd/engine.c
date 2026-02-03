@@ -164,7 +164,7 @@ struct Value *tanhValue(struct Value *val1)
 
 void printValue(struct Value *val)
 {
-    printf("\nValue %p\nData: %f\nGrad: %f\nisLeaf: %d\nChild1 Pointer: %p\nChild2 Pointer: %p\nOperation: %c\nIs Updatable: %d",
+    printf("\nValue %p\nData: %f\nGrad: %f\nisLeaf: %d\nChild1 Pointer: %p\nChild2 Pointer: %p\nOperation: %c\nIs Updatable: %d\n",
            (void *)val,
            val->data,
            val->grad,
