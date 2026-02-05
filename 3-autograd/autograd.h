@@ -62,3 +62,21 @@ struct Tensor *createTensor(int width, bool createRandVals, bool updatable);
 struct Value **get_sub_array_from_tensor(struct Tensor *tensor, int startIndex, int endIndex);
 struct Embedding_Table *create_embedding_table(int length, int width);
 struct Value *loss_function_MSE(struct Value *predicted, float actual);
+
+struct Matrix
+{
+    int height;
+    int length;
+
+    float *data;
+    float *grads;
+
+    bool isLeaf;
+    bool isVisited;   // for topological sort
+    bool isUpdatable; // should we update this as a weight / bias? or is it itermediate value
+
+    // If it's not a leaf, we fill these in.
+    struct Matrix *child1;
+    struct Matrix *child2;
+    char op;
+};
