@@ -1,10 +1,7 @@
 # C-Cuda-learning
 
 
-```bash
-gcc helloworld.c -o hello_out
-gcc train.c engine.c neural.c -o autograd
-```
+
 
 
 ## notes
@@ -16,3 +13,15 @@ gcc train.c engine.c neural.c -o autograd
  so rlhf with dynamic polyicy
 
 
+
+SMF shortest makespan first
+
+database scheduling talk:
+ - going inear through schedules for db transations has waits for things
+ - more efficient to specicial order such that dependencies n shi work out best
+ - use greedy approx to find SMF shortest makespan first (iteratively add the transaction that increases makespan the least)
+- in this case (question???) we are allowed to reorder the stuff and still have
+
+classifer to predict 'hot data items' --> predict how long editing each item will take --> use greedy algo
+
+how does 
