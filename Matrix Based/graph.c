@@ -54,6 +54,13 @@ void getTopo(struct Matrix *head, struct Matrix **topologicalArray, int *size)
 //         }
 //     }
 // }
-// void zeroGrad(struct Matrix **topologicalArray, int size)
-// {
-// }
+void zeroGrad(struct Matrix **topologicalArray, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        for (int g = 0; g < topologicalArray[i]->rows * topologicalArray[i]->cols; g++)
+        {
+            topologicalArray[i]->grads[g] = 0;
+        }
+    }
+}
