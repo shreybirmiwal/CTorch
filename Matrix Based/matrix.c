@@ -46,7 +46,7 @@ void setMatrixValue(struct Matrix *mat, int row, int col, float data)
     mat->data[indx] = data;
 }
 
-struct Matrix *matmul(struct Matrix *A, struct Matrix *B)
+struct Matrix *multiplyMatrix(struct Matrix *A, struct Matrix *B)
 {
 
     if (A->cols != B->rows)
@@ -82,24 +82,25 @@ struct Matrix *matmul(struct Matrix *A, struct Matrix *B)
             // formula for a a=3x2, b=2x3 ;
             // generalized, we loop for the pattern
 
-            float sum = 0;
+            // float sum = 0;
 
             for (int q = 0; q < A->cols; q++)
             {
-                sum += getMatrixValue(A, i, q) * getMatrixValue(B, q, g);
+                // sum += getMatrixValue(A, i, q) * getMatrixValue(B, q, g);
+                data[i * res->cols + g] += getMatrixValue(A, i, q) * getMatrixValue(B, q, g); // naive way without accumulator
                 // wed keep going as so
                 // + getMatrixValue(A, i, 1) * getMatrixValue(B, 2, 1)
                 // + getMatrixValue(A, i, 2) * getMatrixValue(B, 2, 2)
             }
 
-            setMatrixValue(res, i, g, sum);
+            // setMatrixValue(res, i, g, sum);
         }
     }
 
     return res;
 }
 
-struct Matrix *transpose(struct Matrix *input)
+struct Matrix *transposeMatrix(struct Matrix *input)
 {
     float *newData = malloc(sizeof(float) * input->cols * input->rows);
     struct Matrix *mat = createMatrix(input->cols, input->rows, newData, false, input, NULL, 'T');
@@ -112,4 +113,16 @@ struct Matrix *transpose(struct Matrix *input)
         }
     }
     return mat;
+}
+
+void printMatrix(struct Matrix *mat)
+{
+    for (int i = 0; i < mat->rows; i++)
+    {
+        for (int g = 0; g < mat->cols; g++)
+        {
+            printf("%f ", getMatrixValue(mat, i, g));
+        }
+        printf("\n");
+    }
 }

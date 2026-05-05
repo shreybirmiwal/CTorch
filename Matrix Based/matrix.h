@@ -20,12 +20,13 @@ struct Matrix
 
 struct Matrix *createMatrix(int rows, int cols, float *data, bool isUpdatable, struct Matrix *child1, struct Matrix *child2, char op);
 struct Matrix *createRandMatrix(int rows, int cols, bool isUpdatable);
+void printMatrix(struct Matrix *mat);
 
 // helper
 float getMatrixValue(struct Matrix *mat, int row, int col);
 void setMatrixValue(struct Matrix *mat, int row, int col, float data);
 
 // operations
-struct Matrix *matmul(struct Matrix *A, struct Matrix *B);
+struct Matrix *multiplyMatrix(struct Matrix *A, struct Matrix *B);
+struct Matrix *transposeMatrix(struct Matrix *input);
 
-// we don't need a transpose as we just iterate in a different manner
