@@ -8,6 +8,9 @@ gcc engine.c neuron.c torch_utils.c train.c -o autograd -g
 # with debugger
 lldb ./autograd
 ```
+gcc train.c matrix.c helper.c graph.c -o autograd      
+
+```bash
 
 
 

@@ -100,6 +100,45 @@ struct Matrix *multiplyMatrix(struct Matrix *A, struct Matrix *B)
     return res;
 }
 
+struct Matrix *addMatrix(struct Matrix *A, struct Matrix *B)
+{
+    if (A->rows != B->rows || A->cols != B->cols)
+    {
+        printf("[add] incompatible size error");
+        return NULL;
+    }
+
+    int rows = A->rows;
+    int cols = A->cols;
+    float *data = calloc(rows * cols, sizeof(float));
+
+    for (int i = 0; i < rows; i++)
+    {
+        for (int g = 0; g < cols; g++)
+        {
+            data[i * cols + g] = getMatrixValue(A, i, g) + getMatrixValue(B, i, g);
+        }
+    }
+
+    return createMatrix(rows, cols, data, false, A, B, '+');
+}
+
+
+
+struct Matrix *MSEMatrix(struct Matrix *predicted, struct Matrix *actual) {
+
+    float* data = calloc(1, sizeof(float));
+    struct Matrix *MSE = createMatrix(1, 1, data, false, predicted, actual, 'E');
+
+
+    for (int i = 0; i < predicted->rows * predicted->cols; i++) {
+        MSE->data[0] += (predicted->data[i] - actual->data[i]) * (predicted->data[i] - actual->data[i]);
+    }
+
+    MSE->data[0] /= predicted->rows * predicted->cols;
+
+    return MSE;
+}
 
 // we dont need transpose as a operation that tracks gradients, since its only used internally for the backward pass of matmul.
 // struct Matrix *transposeMatrix(struct Matrix *input)

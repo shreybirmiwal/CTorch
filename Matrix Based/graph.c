@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//for future todo: we  want to use the isUpdatable flag
+
 void getTopo(struct Matrix *head, struct Matrix **topologicalArray, int *size)
 {
     if (head == NULL || head->isVisited == 1)
@@ -54,6 +56,32 @@ void backward(struct Matrix **topologicalArray, int size)
             break;
             }
 
+        case '+':{
+            //child1
+            for (int i = 0; i < currentNode->child1->rows * currentNode->child1->cols; i++)
+            {
+                currentNode->child1->grads[i] += currentNode->grads[i];
+            }   
+            //child2
+            for (int i = 0; i < currentNode->child2->rows * currentNode->child2->cols; i++)
+            {
+                currentNode->child2->grads[i] += currentNode->grads[i];
+            }
+
+            break;
+
+            // we basically just pass teh grads to the children, no increasing / changing since add doesnt do anything to grad
+        }
+
+        case 'E':{
+            //child1
+            for (int i = 0; i < currentNode->child1->rows * currentNode->child1->cols; i++)
+            {
+                currentNode->child1->grads[i] += 2 * (currentNode->child1->data[i] - currentNode->child2->data[i]);
+            }
+            break;
+        }
+
         default:
             printf("error! default case hit");
             break;
@@ -69,6 +97,15 @@ void zeroGrad(struct Matrix **topologicalArray, int size)
         {
             topologicalArray[i]->grads[g] = 0;
         }
+    }
+}
+
+//reset visited to false so we can do new run
+void resetVisited(struct Matrix **topologicalArray, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        topologicalArray[i]->isVisited = false;
     }
 }
 
@@ -95,4 +132,19 @@ void freeGraph(struct Matrix **topologicalArray, int size)
     }
     
     free(topologicalArray);
+}
+
+void updateWeights(struct Matrix **topologicalArr, int size, float learning_rate)
+{
+    for (int i = 0; i < size; i++)
+    {
+        if (topologicalArr[i]->isUpdatable)
+        {
+
+            for (int j = 0; j < topologicalArr[i]->rows * topologicalArr[i]->cols; j++)
+            {
+                topologicalArr[i]->data[j] -= topologicalArr[i]->grads[j] * learning_rate;
+            }
+        }
+    }
 }
