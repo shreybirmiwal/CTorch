@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void matmul_backward(float* a, int ar, int ac, float* b, int br, int bc, float* c)
+void backward_helper_matmul(float* a, int ar, int ac, float* b, int br, int bc, float* c)
 {
     
 
@@ -17,6 +17,16 @@ void matmul_backward(float* a, int ar, int ac, float* b, int br, int bc, float* 
 
             }
 
+        }
+    }
+}
+
+void backward_helper_transpose(float* a, int ar, int ac, float*b) {
+    for (int i = 0; i < ar; i++)
+    {
+        for (int g = 0; g < ac; g++)
+        {
+            b[g * ar + i] = a[i * ac + g];
         }
     }
 }

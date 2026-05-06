@@ -31,7 +31,7 @@ struct Matrix *createRandMatrix(int rows, int cols, bool isUpdatable)
         data[i] = randVal;
     }
 
-    return createMatrix(rows, cols, data, isUpdatable, NULL, NULL, '\0');
+    return createMatrix(rows, cols, data, isUpdatable, NULL, NULL, 'l');
 }
 
 float getMatrixValue(struct Matrix *mat, int row, int col)
@@ -100,20 +100,22 @@ struct Matrix *multiplyMatrix(struct Matrix *A, struct Matrix *B)
     return res;
 }
 
-struct Matrix *transposeMatrix(struct Matrix *input)
-{
-    float *newData = malloc(sizeof(float) * input->cols * input->rows);
-    struct Matrix *mat = createMatrix(input->cols, input->rows, newData, false, input, NULL, 'T');
 
-    for (int i = 0; i < input->rows; i++)
-    {
-        for (int g = 0; g < input->cols; g++)
-        {
-            newData[g * input->rows + i] = getMatrixValue(input, i, g);
-        }
-    }
-    return mat;
-}
+// we dont need transpose as a operation that tracks gradients, since its only used internally for the backward pass of matmul.
+// struct Matrix *transposeMatrix(struct Matrix *input)
+// {
+//     float *newData = malloc(sizeof(float) * input->cols * input->rows);
+//     struct Matrix *mat = createMatrix(input->cols, input->rows, newData, false, input, NULL, 'T');
+
+//     for (int i = 0; i < input->rows; i++)
+//     {
+//         for (int g = 0; g < input->cols; g++)
+//         {
+//             newData[g * input->rows + i] = getMatrixValue(input, i, g);
+//         }
+//     }
+//     return mat;
+// }
 
 void printMatrix(struct Matrix *mat)
 {

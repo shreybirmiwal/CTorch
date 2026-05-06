@@ -28,5 +28,5 @@ void setMatrixValue(struct Matrix *mat, int row, int col, float data);
 
 // operations
 struct Matrix *multiplyMatrix(struct Matrix *A, struct Matrix *B);
-struct Matrix *transposeMatrix(struct Matrix *input);
+// struct Matrix *transposeMatrix(struct Matrix *input);
 

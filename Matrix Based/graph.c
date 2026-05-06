@@ -36,12 +36,16 @@ void backward(struct Matrix **topologicalArray, int size)
 
         case '@':{
             //child1
-            struct Matrix* transposed_child2 = transposeMatrix(currentNode->child2);
-            matmul_backward(currentNode->grads, currentNode->rows, currentNode->cols, transposed_child2->data, transposed_child2->rows, transposed_child2->cols, currentNode->child1->grads);
+            //struct Matrix* transposed_child2 = transposeMatrix(currentNode->child2);
+            float* transposed_child2 = calloc(currentNode->child2->rows * currentNode->child2->cols, sizeof(float));
+            backward_helper_transpose(currentNode->child2->data, currentNode->child2->rows, currentNode->child2->cols, transposed_child2);
+            backward_helper_matmul(currentNode->grads, currentNode->rows, currentNode->cols, transposed_child2, currentNode->child2->cols, currentNode->child2->rows, currentNode->child1->grads);
 
             //child2
-            struct Matrix* transposed_child1 = transposeMatrix(currentNode->child1);
-            matmul_backward(transposed_child1->data, transposed_child1->rows, transposed_child1->cols, currentNode->grads, currentNode->rows, currentNode->cols, currentNode->child2->grads);
+            // struct Matrix* transposed_child1 = transposeMatrix(currentNode->child1);
+            float* transposed_child1 = calloc(currentNode->child1->rows * currentNode->child1->cols, sizeof(float));
+            backward_helper_transpose(currentNode->child1->data, currentNode->child1->rows, currentNode->child1->cols, transposed_child1);
+            backward_helper_matmul(transposed_child1, currentNode->child1->cols, currentNode->child1->rows, currentNode->grads, currentNode->rows, currentNode->cols, currentNode->child2->grads);
             
             
             free(transposed_child1);
