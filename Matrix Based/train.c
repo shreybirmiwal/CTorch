@@ -22,6 +22,7 @@ int main(void)
     
     for (int i = 0; i < 1000; i++)
     {
+
         // create random x, y input pair
         float* x = calloc(10, sizeof(float));
         int x_index = rand() % 10;
@@ -34,12 +35,12 @@ int main(void)
         struct Matrix *input = createMatrix(1, 10, x, false, NULL, NULL, 'l');
         struct Matrix *output = createMatrix(1, 10, y, false, NULL, NULL, 'l');
 
+
         // forward pass: row-vector batch (1x10 one-hot @ 10x9 -> 1x9 -> ... -> 1x10 logits)
         struct Matrix *embedding_table_output = multiplyMatrix(input, embedding_table);
         struct Matrix *layer2_output = multiplyMatrix(embedding_table_output, layer2);
         struct Matrix *layer3_output = addMatrix(layer2_output, layer3);
         struct Matrix *layer4_output = multiplyMatrix(layer3_output, layer4);
-
         struct Matrix *MSE_loss = MSEMatrix(layer4_output, output);
 
         //print loss
@@ -52,6 +53,7 @@ int main(void)
         backward(topologicalArray, size);
         //update weights
         updateWeights(topologicalArray, size, .001);
+
         //clean up
         zeroGrad(topologicalArray, size);
         resetVisited(topologicalArray, size);
